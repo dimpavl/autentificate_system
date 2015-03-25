@@ -9,9 +9,9 @@
         <title>Index</title>
     </head>   
     <body>
-        <c:if test="${not empty errors.userCreationFailed}">
+        <c:if test="${not empty errors.autentificationFailed}">
             <font color="red">
-               * <c:out value="${errors.userCreationFailed}"/>
+               * <c:out value="${errors.autentificationFailed}"/>
             </font>                            
         </c:if>
          <form action="login" method="post">
