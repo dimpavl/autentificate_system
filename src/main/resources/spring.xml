@@ -25,26 +25,42 @@
           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd
 ">
 <aop:aspectj-autoproxy />
+<context:annotation-config />
 
 <bean id="transactionalAspect" class="com.autentification_system.Aspects.TransactionalAspect" >
     <property name="sessionFactory" ref="sessionFactory"/>
 </bean>
 
-<bean name="autentificationService" class="com.autentification_system.ServicesImpl.AutentificationServiceImpl"/>
-<bean name="registrationValidator" class="com.autentification_system.Validators.RegistrationValidate"/>
-<bean name="registrationService" class="com.autentification_system.ServicesImpl.RegistrationServiceImpl"/>
+<!--Validators-->
+<bean name="validator" class="com.autentification_system.Validator.Validators"/>
 
-<bean name="userDao" class="com.autentification_system.DAOImpl.UserDAOImpl" >
+<!--Services-->
+<bean name="autentificationService" class="com.autentification_system.Services.AutentificationServiceImpl">
+    <property name="userDao" ref="userDao"/>
+    <property name="roleDao" ref="roleDao"/>
+    <property name="entranceDao" ref="entranceDao"/>
+</bean>
+<bean name="registrationService" class="com.autentification_system.Services.RegistrationServiceImpl">
+    <property name="userDao" ref="userDao"/>
+    <property name="roleDao" ref="roleDao"/>
+    <property name="entranceDao" ref="entranceDao"/>
+</bean>
+
+<!--DAO-->
+<bean name="userDao" class="com.autentification_system.DAO.UserDAOImpl" >
     <property name="trmanager" ref="transactionalAspect"/>    
 </bean>
 
-<bean name="roleDao" class="com.autentification_system.DAOImpl.RoleDAOImpl">
-    <property name="trmanager" ref="transactionalAspect"/> 
-</bean>
-<bean name="entranceDao" class="com.autentification_system.DAOImpl.EntranceDAOImpl">
+<bean name="roleDao" class="com.autentification_system.DAO.RoleDAOImpl">
     <property name="trmanager" ref="transactionalAspect"/> 
 </bean>
 
+<bean name="entranceDao" class="com.autentification_system.DAO.EntranceDAOImpl">
+    <property name="trmanager" ref="transactionalAspect"/> 
+</bean>
+
+
+<!--DataSource-->
 <bean id="dataSource" destroy-method="close" class="com.mchange.v2.c3p0.ComboPooledDataSource" 
           p:initialPoolSize="2" 
           p:minPoolSize="2" 
@@ -56,9 +72,7 @@
     <property name="password"    value="1234"/>    
 </bean>
 
-
-
-
+<!--ORM-->
  <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
     <property name="dataSource" ref="dataSource"/>
     <property name="packagesToScan" value="com.autentification_system.Entities"/>  

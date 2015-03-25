@@ -12,5 +12,5 @@ import com.autentification_system.Entities.User;
  * @author Дима
  */
 public interface AutentificationService {
-    public User login(String login, String password);    
+    public User autentificate(String login, String password);    
 }

@@ -20,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -61,8 +62,8 @@ public class User implements Serializable {
     @JoinColumn(name = "role", referencedColumnName = "idrole")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Role role;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "iduser", fetch = FetchType.LAZY)
-    private List<Entrance> entranceList;
+    @OneToOne(mappedBy = "iduser", fetch = FetchType.LAZY)
+    private Entrance entrance;
 
     public User() {
     }
@@ -136,14 +137,14 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    public List<Entrance> getEntranceList() {
-        return entranceList;
+    public Entrance getEntrance() {
+        return entrance;
     }
 
-    public void setEntranceList(List<Entrance> entranceList) {
-        this.entranceList = entranceList;
+    public void setEntrance(Entrance entrance) {
+        this.entrance = entrance;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -162,7 +163,7 @@ public class User implements Serializable {
             return false;
         }
         return true;
-    }
+    }       
 
     @Override
     public String toString() {

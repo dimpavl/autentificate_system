@@ -8,7 +8,7 @@ package com.autentification_system.Controllers;
 import com.autentification_system.Entities.User;
 import com.autentification_system.Services.RegistrationService;
 import com.autentification_system.Utils.SpringContext;
-import com.autentification_system.Validators.RegistrationValidate;
+import com.autentification_system.Validator.Validators;
 import java.io.IOException;
 import java.util.*;
 import javax.servlet.ServletException;
@@ -27,14 +27,13 @@ public class RegistrationController extends HttpServlet {
     private String successUrl = "./login";
     private String failure = "registration.jsp";
     
-    private RegistrationValidate regVal;
+    private Validators regVal;
     private RegistrationService regServ;
     @Override
     public void init() throws ServletException {
         ApplicationContext context = SpringContext.getContext();
-        regVal = (RegistrationValidate)context.getBean("registrationValidator");
-        regServ = (RegistrationService)context.getBean("registrationService");
-        
+        regVal = context.getBean("validator", Validators.class);
+        regServ = context.getBean("registrationService", RegistrationService.class);        
     }
     
     
@@ -53,13 +52,23 @@ public class RegistrationController extends HttpServlet {
         String password = req.getParameter("password");
         String password_confirm = req.getParameter("password_confirm");
         
-        Map<String, String> errors = regVal.validate(username, login, email, password, password_confirm);
+        Map<String, String> errors = regVal.registrationValidate(username, login, email, password, password_confirm);
         if (errors.isEmpty()){
             User user = regServ.registrate(username, login, email, password, password_confirm);
+            if (user == null){
+                req.setAttribute("username", username);
+                req.setAttribute("login", login);
+                req.setAttribute("email", email);
+                req.setAttribute("password", password);
+                req.setAttribute("password_confirm", password_confirm);
+                errors.put("userCreationFailed", "User with such login or ussername or email already exists.");
+                req.setAttribute("errors", errors);
+                req.getRequestDispatcher(failure).forward(req, resp);
+                return;
+            }
             req.getSession().setAttribute("userAuth", user);
             resp.sendRedirect(successUrl);        
-        }
-        else{
+        }else{
             req.setAttribute("username", username);
             req.setAttribute("login", login);
             req.setAttribute("email", email);
@@ -68,6 +77,7 @@ public class RegistrationController extends HttpServlet {
             req.setAttribute("errors", errors);
             req.getRequestDispatcher(failure).forward(req, resp);
         }
+                
         
         
         

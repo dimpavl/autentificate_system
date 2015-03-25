@@ -26,5 +26,7 @@ public interface UserDAO extends TransactionManager{
         
     public User findBySalt(String salt);
     
-    public User findByEmail(String email);
+    public User findByEmail(String email); 
+        
+    public User insertNewUser(User user);
 }

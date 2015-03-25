@@ -19,4 +19,6 @@ public interface EntranceDAO extends TransactionManager{
     public List<Entrance> findByFailedAttempts(int failedAttempts);
         
     public List<Entrance> findByBlocking(boolean blocking);
+    
+    public Entrance insertNewEntrance(Entrance e);
 }

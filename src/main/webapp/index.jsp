@@ -8,15 +8,25 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Index</title>
     </head>   
-    <body>        
+    <body>
+        <c:if test="${not empty errors.userCreationFailed}">
+            <font color="red">
+               * <c:out value="${errors.userCreationFailed}"/>
+            </font>                            
+        </c:if>
          <form action="login" method="post">
             <table>
                 <tr>
                     <td>
                         <label for="login">Login:</label>
                     </td>
-                    <td>
-                        <input type="text" name="login"/>
+                    <td>                        
+                        <input type="text" name="login" value='${login}'/>
+                        <c:if test="${not empty errors.login}">
+                            <font color="red">
+                               * <c:out value="${errors.login}"/>
+                            </font>                            
+                        </c:if>
                     </td>
                 </tr>
                     
@@ -25,7 +35,12 @@
                     <label for="password">Password:</label>
                 </td>
                 <td>
-                    <input type="password" name="password">
+                    <input type="password" name="password" value='${password}' />
+                    <c:if test="${not empty errors.password}">
+                        <font color="red">
+                           * <c:out value="${errors.password}"/>
+                        </font>                            
+                    </c:if>
                 </td>
             </tr>
             </table>

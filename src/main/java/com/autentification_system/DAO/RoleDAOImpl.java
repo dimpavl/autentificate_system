@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.autentification_system.DAOImpl;
+package com.autentification_system.DAO;
 
 import com.autentification_system.Aspects.TransactionMethod;
 import com.autentification_system.Aspects.TransactionalAspect;

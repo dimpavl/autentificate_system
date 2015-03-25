@@ -14,6 +14,11 @@
     <body>
                        
         <h3>Registrate new user</h3>
+        <c:if test="${not empty errors.userCreationFailed}">
+            <font color="red">
+               * <c:out value="${errors.userCreationFailed}"/>
+            </font>                            
+        </c:if>
         <form method="POST" action="registrate">
             <table>
                  <tr>
@@ -59,8 +64,7 @@
                     <td>                        
                         <label for="password">Password:</label>
                     </td>
-                    <td>
-                        
+                    <td>                        
                         <input type="password" name="password" value='${password}' />
                         <c:if test="${not empty errors.password}">
                             <font color="red">
@@ -78,7 +82,7 @@
                     </td>
                 </tr>
             </table>
-            <input type="submit" value="Registrate">
+            <input type="submit" value="Registrate"><input type="button" onclick="window.location.href='.'" value="Cancel"/>
         </form>
     </body>
 </html>

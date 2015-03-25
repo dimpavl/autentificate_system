@@ -12,13 +12,7 @@
         <title>Secure</title>
     </head>
     <body>
-       Hello ${userAuth.login}!
-       
-    <c:forEach items="${roles}" var="element"> 
-        <tr>
-            <td>${element.idrole}</td>
-            <td>${element.role}</td>            
-        </tr>
-    </c:forEach>
+       <a href="./logout">Logout</a><br/>
+       Hello ${userAuth.login}!           
     </body>
 </html>
