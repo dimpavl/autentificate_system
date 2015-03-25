@@ -5,10 +5,26 @@
  */
 package com.autentification_system.DAO;
 
+import com.autentification_system.Entities.User;
+import java.util.*;
+
 /**
  *
  * @author Дима
  */
-public interface UserDAO {
+public interface UserDAO extends TransactionManager{
+
+    public List<User> findAll();
+        
+    public User findByUserName(String username);
+        
+    public User findByUserId(int userId);
+       
+    public User findByLogin(String login);
+       
+    public User findByPassword(String password);
+        
+    public User findBySalt(String salt);
     
+    public User findByEmail(String email);
 }

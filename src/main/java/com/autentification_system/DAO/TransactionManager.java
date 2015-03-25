@@ -5,17 +5,15 @@
  */
 package com.autentification_system.DAO;
 
-import com.autentification_system.Entities.Role;
-import java.util.*;
+import com.autentification_system.Aspects.TransactionalAspect;
 
 /**
  *
  * @author Дима
  */
-public interface RoleDAO extends TransactionManager{
-     
-    public List<Role> findAll();        
-    public Role findByIdrole(int idrole);        
-    public Role findByRole(String role) ;
+public interface TransactionManager {
+    public TransactionalAspect getTrmanager();
     
+
+    public void setTrmanager(TransactionalAspect trmanager);
 }

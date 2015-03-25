@@ -44,6 +44,7 @@ public class AutentificateController extends HttpServlet {
             req.getRequestDispatcher(sequreUrl).forward(req, resp);
             return;
         }
+        Role r = roleDao.findByIdrole(0);
         req.getRequestDispatcher(indexUrl).forward(req, resp);
     }                          
     

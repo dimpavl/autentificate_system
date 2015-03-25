@@ -42,7 +42,7 @@ public class Entrance implements Serializable {
     private int failedAttempts;
     @Basic(optional = false)
     @Column(name = "blocking")
-    private short blocking;
+    private boolean blocking;
     @JoinColumn(name = "iduser", referencedColumnName = "user_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private User iduser;
@@ -54,7 +54,7 @@ public class Entrance implements Serializable {
         this.id = id;
     }
 
-    public Entrance(Integer id, int failedAttempts, short blocking) {
+    public Entrance(Integer id, int failedAttempts, boolean blocking) {
         this.id = id;
         this.failedAttempts = failedAttempts;
         this.blocking = blocking;
@@ -76,11 +76,11 @@ public class Entrance implements Serializable {
         this.failedAttempts = failedAttempts;
     }
 
-    public short getBlocking() {
+    public boolean getBlocking() {
         return blocking;
     }
 
-    public void setBlocking(short blocking) {
+    public void setBlocking(boolean blocking) {
         this.blocking = blocking;
     }
 

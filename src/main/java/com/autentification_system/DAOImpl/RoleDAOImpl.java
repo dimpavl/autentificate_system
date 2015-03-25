@@ -29,14 +29,41 @@ public class RoleDAOImpl implements RoleDAO{
         this.trmanager = trmanager;
     }    
     
-    
-//    @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r"),
-//    @NamedQuery(name = "Role.findByIdrole", query = "SELECT r FROM Role r WHERE r.idrole = :idrole"),
-//    @NamedQuery(name = "Role.findByRole", query = "SELECT r FROM Role r WHERE r.role = :role")})
-    @TransactionMethod
-    public List<Role> findAll(){
+       
+    private List<Role> _findAll(){
         Session session = trmanager.getSession();
         Query query = session.getNamedQuery("Role.findAll");
         return query.list();
     }
+        
+    private Role _findByIdrole(int idrole) {
+        Session session = trmanager.getSession();
+        Query query = session.getNamedQuery("Role.findByIdrole").setInteger("idrole", idrole);
+        return query.list().isEmpty() ? null: (Role)query.list().get(0);
+    }
+    
+    
+    private Role _findByRole(String role) {
+        Session session = trmanager.getSession();
+        Query query = session.getNamedQuery("Role.findByRole").setString("role", role);
+        return query.list().isEmpty() ? null: (Role)query.list().get(0);
+    }
+    
+            
+    @TransactionMethod
+    public List<Role> findAll(){
+        return _findAll();
+    }
+    
+    @TransactionMethod
+    public Role findByIdrole(int idrole) {
+        return _findByIdrole(idrole);
+    }
+    
+    @TransactionMethod
+    public Role findByRole(String role) {
+        return _findByRole(role);
+    }
+    
+    
 }

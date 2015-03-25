@@ -5,10 +5,18 @@
  */
 package com.autentification_system.DAO;
 
+import com.autentification_system.Entities.Entrance;
+import java.util.*;
 /**
  *
  * @author Дима
  */
-public interface EntranceDAO {
-    
+public interface EntranceDAO extends TransactionManager{    
+    public List<Entrance> findAll();
+        
+    public Entrance findById(int id);
+       
+    public List<Entrance> findByFailedAttempts(int failedAttempts);
+        
+    public List<Entrance> findByBlocking(boolean blocking);
 }
