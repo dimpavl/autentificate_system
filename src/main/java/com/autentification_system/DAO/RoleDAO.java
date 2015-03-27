@@ -6,6 +6,7 @@
 package com.autentification_system.DAO;
 
 import com.autentification_system.Entities.Role;
+import com.autentification_system.Entities.User;
 import java.util.*;
 
 /**
@@ -17,5 +18,6 @@ public interface RoleDAO extends TransactionManager{
     public List<Role> findAll();        
     public Role findByIdrole(int idrole);        
     public Role findByRole(String role) ;
+    public List<User> getUsersByRole(Role role);
     
 }

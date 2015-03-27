@@ -28,8 +28,7 @@ import javax.persistence.Table;
 @Table(name = "entrance")
 @NamedQueries({
     @NamedQuery(name = "Entrance.findAll", query = "SELECT e FROM Entrance e"),
-    @NamedQuery(name = "Entrance.findById", query = "SELECT e FROM Entrance e WHERE e.id = :id"),
-    @NamedQuery(name = "Entrance.findByFailedAttempts", query = "SELECT e FROM Entrance e WHERE e.failedAttempts = :failedAttempts"),
+    @NamedQuery(name = "Entrance.findById", query = "SELECT e FROM Entrance e WHERE e.id = :id"),    
     @NamedQuery(name = "Entrance.findByBlocking", query = "SELECT e FROM Entrance e WHERE e.blocking = :blocking")})
 public class Entrance implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -38,9 +37,7 @@ public class Entrance implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @Column(name = "failed_attempts")
-    private int failedAttempts;
+    
     @Basic(optional = false)
     @Column(name = "blocking")
     private boolean blocking;
@@ -55,9 +52,8 @@ public class Entrance implements Serializable {
         this.id = id;
     }
 
-    public Entrance(Integer id, int failedAttempts, boolean blocking) {
-        this.id = id;
-        this.failedAttempts = failedAttempts;
+    public Entrance(Integer id, boolean blocking) {
+        this.id = id;        
         this.blocking = blocking;
     }
 
@@ -69,13 +65,6 @@ public class Entrance implements Serializable {
         this.id = id;
     }
 
-    public int getFailedAttempts() {
-        return failedAttempts;
-    }
-
-    public void setFailedAttempts(int failedAttempts) {
-        this.failedAttempts = failedAttempts;
-    }
 
     public boolean getBlocking() {
         return blocking;

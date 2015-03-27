@@ -7,8 +7,8 @@ package com.autentification_system.DAO;
 
 import com.autentification_system.Aspects.TransactionMethod;
 import com.autentification_system.Aspects.TransactionalAspect;
-import com.autentification_system.DAO.RoleDAO;
 import com.autentification_system.Entities.Role;
+import com.autentification_system.Entities.User;
 import java.util.*;
 import org.hibernate.Query;
 import org.hibernate.classic.Session;
@@ -63,6 +63,18 @@ public class RoleDAOImpl implements RoleDAO{
     @TransactionMethod
     public Role findByRole(String role) {
         return _findByRole(role);
+    }
+    
+    @TransactionMethod
+    public List<User> getUsersByRole(Role role) {
+        Session session = trmanager.getSession();
+        session.update(role);
+        List<User> res = role.getUserList();
+        for (User u: res){
+            u.getEntrance();
+            u.getRole();
+        }
+        return res;
     }
     
     

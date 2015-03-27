@@ -64,14 +64,16 @@ public class RegistrationServiceImpl implements RegistrationService{
         if (user != null) return null;
         
         user = new User(0, username, login, pass, salt, email);
-        Role role = roleDao.findByIdrole(0);
-        user.setRole(role);
-        Entrance entrance = new Entrance(0, 0, false);
+        Role role = roleDao.findByIdrole(0);        
+        Entrance entrance = new Entrance(0, false);                        
+        
+        user.setRole(role);        
         entrance.setIduser(user);
         user.setEntrance(entrance);
         user = userDao.insertNewUser(user);
         entranceDao.insertNewEntrance(entrance);
+        
         return user;
     }
-    
+            
 }

@@ -5,6 +5,8 @@
  */
 package com.autentification_system.DAO;
 
+import com.autentification_system.Entities.Entrance;
+import com.autentification_system.Entities.Role;
 import com.autentification_system.Entities.User;
 import java.util.*;
 
@@ -29,4 +31,6 @@ public interface UserDAO extends TransactionManager{
     public User findByEmail(String email); 
         
     public User insertNewUser(User user);
+    
+    public User findFullUser(String login);
 }

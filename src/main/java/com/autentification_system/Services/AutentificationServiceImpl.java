@@ -7,8 +7,12 @@ package com.autentification_system.Services;
 import com.autentification_system.DAO.EntranceDAO;
 import com.autentification_system.DAO.RoleDAO;
 import com.autentification_system.DAO.UserDAO;
+import com.autentification_system.Entities.Role;
 import com.autentification_system.Entities.User;
 import com.autentification_system.Utils.StringUtilities;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 /**
  *
  * @author Дима
@@ -45,11 +49,22 @@ public class AutentificationServiceImpl implements AutentificationService{
     public User autentificate(String login, String password) {        
         User user = null;
         
-        user = userDao.findByLogin(login);
+        user = userDao.findFullUser(login);
         if (user == null || !user.getPassword().equals(StringUtilities.md5(password+user.getSalt()))){
             return null;
-        }
+        }        
         return user;
+    }
+    
+    public Map<String, List<User>> getAllUsers(){
+        Map<String, List<User>> res = new HashMap<String, List<User>>();
+        List<Role> roles = roleDao.findAll();
+        for (Role r: roles){
+            List<User> temp =  roleDao.getUsersByRole(r);
+            res.put(r.getRole(), temp);
+        }
+        
+        return res;
     }
     
 }

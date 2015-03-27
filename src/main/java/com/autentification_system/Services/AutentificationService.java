@@ -6,11 +6,14 @@
 package com.autentification_system.Services;
 
 import com.autentification_system.Entities.User;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author Дима
  */
 public interface AutentificationService {
-    public User autentificate(String login, String password);    
+    public User autentificate(String login, String password);
+    public Map<String, List<User>> getAllUsers();
 }

@@ -41,7 +41,16 @@ public class AutentificateController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getSession().getAttribute("userAuth") != null){                       
+        User user = (User)req.getSession().getAttribute("userAuth");
+        if (user != null){
+            if (user.getEntrance().getBlocking()){
+                req.getRequestDispatcher(indexUrl).forward(req, resp);
+                return;
+            }
+            if (user.getRole().getRole().equals("admin")){
+                Map<String, List<User>> allUsers = authServ.getAllUsers();
+                req.setAttribute("allUsers", allUsers);
+            }
             req.getRequestDispatcher(sequreUrl).forward(req, resp);
             return;
         }       
@@ -62,7 +71,17 @@ public class AutentificateController extends HttpServlet {
                 req.getRequestDispatcher(indexUrl).forward(req, resp);
                 return;
             }
+            if (user.getEntrance().getBlocking()){
+                errors.put("autentificationFailed", "You are blocked");
+                req.setAttribute("errors", errors);
+                req.getRequestDispatcher(indexUrl).forward(req, resp);
+                return;
+            }
             req.getSession().setAttribute("userAuth", user);
+            if (user.getRole().getRole().equals("admin")){
+                Map<String, List<User>> allUsers = authServ.getAllUsers();
+                req.setAttribute("allUsers", allUsers);
+            }
             req.getRequestDispatcher(sequreUrl).forward(req, resp);            
         }else{            
             req.setAttribute("login", login);            

@@ -8,6 +8,7 @@ package com.autentification_system.DAO;
 import com.autentification_system.Aspects.TransactionMethod;
 import com.autentification_system.Aspects.TransactionalAspect;
 import com.autentification_system.DAO.UserDAO;
+import com.autentification_system.Entities.Entrance;
 import com.autentification_system.Entities.Role;
 import com.autentification_system.Entities.User;
 import java.util.*;
@@ -112,11 +113,23 @@ public class UserDAOImpl implements UserDAO{
     public User findByEmail(String email){
         return _findByEmail(email);
     }
-
+        
+    
     @TransactionMethod
     public User insertNewUser(User user) {
         Session session = trmanager.getSession();
         session.save(user);
+        return user;
+    }
+    
+    @TransactionMethod
+    public User findFullUser(String login){
+        Session session = trmanager.getSession();
+        User user = _findByLogin(login);
+        if (user != null){
+            user.getRole().getRole(); 
+            user.getEntrance().getBlocking();
+        }
         return user;
     }
 }

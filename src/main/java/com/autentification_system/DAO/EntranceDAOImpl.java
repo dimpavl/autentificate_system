@@ -41,11 +41,7 @@ public class EntranceDAOImpl implements EntranceDAO{
         return query.list().isEmpty()? null : (Entrance)query.list().get(0);
     }
     
-    private List<Entrance> _findByFailedAttempts(int failedAttempts){
-        Session session = trmanager.getSession();
-        Query query = session.getNamedQuery("Entrance.findByFailedAttempts").setInteger("failedAttempts", failedAttempts);              
-        return query.list();
-    }
+   
     
     private List<Entrance> _findByBlocking(boolean blocking){
         Session session = trmanager.getSession();
@@ -63,10 +59,7 @@ public class EntranceDAOImpl implements EntranceDAO{
         return _findById(id);
     }
     
-    @TransactionMethod
-    public List<Entrance> findByFailedAttempts(int failedAttempts){
-        return _findByFailedAttempts(failedAttempts);
-    }
+    
     
     @TransactionMethod
     public List<Entrance> findByBlocking(boolean blocking){
@@ -78,5 +71,12 @@ public class EntranceDAOImpl implements EntranceDAO{
         Session session = trmanager.getSession();
         session.save(e);
         return e;
+    }
+    
+    @TransactionMethod
+    public void updateEntrance(Entrance e) {
+        Session session = trmanager.getSession();
+        session.update(e);
+        
     }
 }

@@ -16,9 +16,10 @@ public interface EntranceDAO extends TransactionManager{
         
     public Entrance findById(int id);
        
-    public List<Entrance> findByFailedAttempts(int failedAttempts);
+    
         
     public List<Entrance> findByBlocking(boolean blocking);
     
     public Entrance insertNewEntrance(Entrance e);
+    public void updateEntrance(Entrance e);
 }
